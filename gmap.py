@@ -15,7 +15,7 @@ from basic import save_data
 
 chrome_path = which('chromedriver.exe')
 chrome_options = Options()
-# chrome_options.add_argument('--headless')
+chrome_options.add_argument('--headless')
 chrome_options.add_argument("--disable-notifications")
 chrome_options.add_argument("--disable-geo")
 chrome_options.add_argument("start-maximized")
@@ -56,9 +56,9 @@ def google_map_search(url,skeep_page,file_name):
         index_j =int(index_j)%20
         if index_j == 0:
             index_j = 20
-        if index_j < 20:
-            k = False
-            print('stoping execution, k less 20')
+        # if index_j < 20:
+        #     k = False
+        #     print('stoping execution, k less 20')
         print(index_j)
 
         for i in range(index_i,index_j+1):
@@ -95,12 +95,22 @@ def google_map_search(url,skeep_page,file_name):
             except:
                 opening_hrs = 'opening hr not provided'
             print(opening_hrs)
+
+            # google category
+            try:
+                google_category = wait5.until(EC.presence_of_element_located((By.XPATH,'//button[@jsaction="pane.rating.category"]'))).text
+            except:
+                google_category = 'google_category not available'
+            print(google_category)
+
+
             # website
             try:
                 website = wait2.until(EC.presence_of_element_located((By.XPATH,'//img[@src="//www.gstatic.com/images/icons/material/system_gm/1x/public_gm_blue_24dp.png"]/ancestor::node()[@class="ugiz4pqJLAG__content"]/div[2]/div[1]'))).text
             except:
                 website = 'website not available'
             print(website)
+
             # Phone No.
             try:
                 phone = wait2.until(EC.presence_of_element_located((By.XPATH,'//img[@src="//www.gstatic.com/images/icons/material/system_gm/1x/phone_gm_blue_24dp.png"]/ancestor::node()[@class="ugiz4pqJLAG__content"]/div[2]/div[1]'))).text
@@ -124,8 +134,9 @@ def google_map_search(url,skeep_page,file_name):
             except:
                 review_number = 'not available'
             print(review_number)
+
             # processing deatails
-            detail_list = [title,address,opening_hrs,website,phone,plus_code,review,review_number]
+            detail_list = [google_category,title,address,opening_hrs,website,phone,plus_code,review,review_number]
             save_data(detail_list,file_name)
             back_to_results = driver.find_element_by_xpath('//*[@id="pane"]/div/div[1]/div/div/button/span')
             back_to_results.click()

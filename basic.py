@@ -2,10 +2,7 @@ import pandas as pd
 
 
 
-
-
-
-dict2 = {
+dict2 = {"google_category":[],
         "title":[],
         "address":[],
         "opening_hrs":[],
@@ -16,8 +13,7 @@ dict2 = {
         "total number of reviews":[]
         }
 
-clmn = clmn = list(dict2.keys())
-
+clmn = list(dict2.keys())
 
 def save_data(data,file_name):
     try:
@@ -28,3 +24,5 @@ def save_data(data,file_name):
     df0 = pd.DataFrame([data], columns=clmn)
     df = df2.append(df0,ignore_index=True)    
     df.to_csv(file_name,index=False)
+
+
